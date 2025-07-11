@@ -1,0 +1,4 @@
+<If "%{HTTPS} != 'on'">
+Redirect https://%{SERVER_NAME}%{REQUEST_URI}
+</If>
+Require all granted

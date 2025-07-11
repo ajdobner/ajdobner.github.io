@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+compile '/**/*.md' do
+  filter :erb if @item[:is_dynamic]
+  filter :kramdown
+  layout '/default.*'
+  filter :relativize_paths, type: :html5
+  if item.identifier =~ '**/index.*'
+    write item.identifier.without_ext + '.html'
+  else
+    write item.identifier.without_ext + '/index.html'
+  end
+end
+
+
+passthrough '/assets/**/*'
+passthrough '/**/.htaccess'
+
+ignore '/notes/**/*'
+
+layout '/**/*', :erb

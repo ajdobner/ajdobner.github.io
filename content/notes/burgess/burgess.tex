@@ -1,0 +1,216 @@
+\documentclass[a4paper,11pt,twoside]{amsart}
+\usepackage{geometry}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{todonotes}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{url}
+
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\Log}{\operatorname{Log}}
+\newcommand{\Arg}{\operatorname{Arg}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+%\setlength{\oddsidemargin}{.5in}
+%\setlength{\evensidemargin}{.5in}
+%\setlength{\textwidth}{\paperwidth}
+%\addtolength{\textwidth}{-1in}
+\setlength\evensidemargin\oddsidemargin
+
+\begin{document}
+\title{The Burgess Bound}
+\author{Alex Dobner}
+\address{Department of Mathematics, UCLA\\
+520 Portola Plaza\\
+Los Angeles CA 90095}
+\email{adobner@math.ucla.edu}
+\maketitle
+
+Let $\chi$ denote a Dirichlet non-principal character modulo $q$, and let $S(M,N)$ denote the incomplete character sum
+\[
+S(M,N) \coloneqq \sum_{n = M+1}^{M+N} \chi(n).
+\]
+It is a classical problem to bound this sum in terms of $N$ and $q$. Note that we may reduce to the case $N < q$ by orthogonality, and also note that we have a trivial bound on this sum, $S(M,N) \leq N$.
+
+In class we discussed the following bound.
+
+\begin{theorem}[P\'{o}lya-Vinogradov Inequality]
+Let $\chi$ be a non-principal character modulo $q$. Then for any integers $M, N$ with $N > 0$,
+\[
+S(M,N) \ll \sqrt{q} \log q.
+\]
+\end{theorem}
+
+If one wants a bound which is independent of $N$, then the P\'{o}lya-Vinogradov inequality is close to the best possible. Indeed, Montgomery and Vaughan have shown on GRH that
+\[
+S(M,N) \ll \sqrt{q} \log\log q,
+\]
+and a result of Paley shows that sums of this size are actually attained.
+
+For $N \ll \sqrt{q}\log q$, the P\'{o}lya-Vinogradov inequality is worse than the trivial bound, but probabilistic heuristics suggest that there should be ``square-root cancellation'' in $N$. More precisely, we expect that
+\[
+S(M,N) \ll N^{\frac{1}{2}} q^{\eps}
+\]
+for any $\eps > 0$. For $M = 0$ this follows from the generalized Lindel\"{o}f hypothesis $L(s,\chi) \ll (q (|t| + 2))^\eps$ by a standard application of Perron's formula.
+
+We will discuss a more sophisticated bound on $S(M, N)$ due to Burgess which depends on the Riemann hypothesis for curves over a finite field.
+
+\begin{theorem}[Burgess]
+Let $\chi$ be a nonprincipal character modulo an odd prime $p$, and let $r$ be a positive integer. We have
+\[
+S(M,N) \ll r N^{1-\frac{1}{r}} p^{\frac{r+1}{4r^2}} \left(\log p\right)^{\alpha_r}
+\]
+where $\alpha_r = 1$ when $r = 1$ and $\alpha_r = \frac{1}{2r}$ otherwise.
+\end{theorem}
+
+\section{Lemmas}
+In order to prove bounds on incomplete character sums (i.e. sums over some subset of residues modulo $q$) it is common to relate them in some way to complete sums (i.e. sums over every residue class). For example, the standard proof of the P\'{o}lya-Vinogradov theorem involves expressing the multiplicative character $\chi$ as a complete sum of additive characters.
+
+To prove the Burgess bound, the complete sums we consider are of the form
+\[
+\sum_{n=1}^p \chi(f(n))
+\]
+where $f$ is a polynomial. It is possible to prove square-root cancellation on sums like this using the Riemann hypothesis over finite fields.
+
+\begin{lemma}[Weil]
+Let $\chi$ be a character modulo $p$ of order $d > 1$. Suppose $f(x) \in \mathbb{F}_p[X]$ is a polynomial which is not of the form $c (g(X))^d$ for some $c \in \mathbb{F}_p$ and $g(X) \in \mathbb{F}_p[X]$. Let $m$ be the number of distinct roots of $f(X)$. Then
+\[
+\left| \sum_{n=1}^p \chi(f(n)) \right| \leq (m-1) p^{\frac{1}{2}}.
+\]
+\end{lemma}
+
+In order to apply Weil's bound to the sums $S(M,N)$, we will need to relate $S(M,N)$ to sums of $\chi$ evaluated at the polynomial points $f(n)$. Since $\chi$ is multiplicative, such polynomials arise naturally by taking moments of short character sums. The following lemma will suffice for our purposes.
+
+\begin{lemma}
+Let $\chi$ be a non-principal character modulo $p$ and let $r$ be a positive integer. Then
+\[
+\sum_{n=1}^p \left| \sum_{m=1}^h \chi(n+m) \right| ^{2r} \ll r^{2r} \left(h^r p + h^{2r} p^{\frac{1}{2}}\right).
+\]
+\end{lemma}
+
+The proof of Lemma 2 is a fairly straightforward application of Lemma 1 (see \cite[Lemma 9.26]{montgomery2007v} for details).
+
+\section{Proof of the Burgess bound}
+\subsection{Basic Idea}
+We now give the main ideas in the proof of the Burgess bound. To start we note that the $r = 1$ case is simply the P\'{o}lya-Vinogradov inequality, so we may assume $r \geq 2$. Recall that $S(M,N)$ is defined to be the sum of $\chi$ evaluated at each of elements of $I \coloneqq \{M+1, \ldots, M+N\}$. Now suppose that we have some family $\mathcal{F}$ of subsets of $I$ which is a $k$-fold covering of $I$ (i.e. each element of $I$ is contained in $k$ of the sets in $\mathcal{F}$). Then trivially we may note that
+\begin{equation} \label{eq:kfold}
+S(M, N) = \frac{1}{k} \sum_{E \in \mathcal{F}} \sum_{j \in E} \chi(j).
+\end{equation}
+Hence, if $|S(M,N)|$ is large then it must be the case that many of the sums $\sum_{j \in E} \chi(j)$ are large as well. Conversely, if we want to bound $S(M, N)$ it is enough to know that bounds on $\sum_{j \in E} \chi(j)$ hold ``on average.''
+
+To give an example of this idea, suppose $H$ is a small parameter relative to $N$ and let $\mathcal{F}$ consist of translates of the set $\{1,2, \ldots, H\}$. In particular, suppose the translates are $\{n + 1, \ldots, n+H\}$ for each $n \in I$. This is family is not quite an $H$-fold covering of $I$ because some of the elements of $I$ near the endpoints are covered fewer than $H$ times, but it is easy to see that we still get an approximate version of \eqref{eq:kfold},
+\[
+S(M, N) = \frac{1}{H} \sum_{n = M+1}^{M+N} \sum_{k = 1}^H \chi(n + k) + O(H).
+\]
+
+In order to bound the main term of this expression, we can apply H\"{o}lder's inequality to see
+\begin{align}
+\left| \frac{1}{H} \sum_{n = M+1}^{M+N} \sum_{k = 1}^H \chi(n + k)\right| &\leq \frac{1}{H} N^{1-\frac{1}{2r}} \left( \sum_{n = M+1}^{M+N} \left| \sum_{k = 1}^H \chi(n + k) \right|^{2r} \right)^\frac{1}{2r}  \label{eq:naivebd}\\
+&\leq \frac{1}{H} N^{1-\frac{1}{2r}} \left( \sum_{n=1}^{p} \left| \sum_{k = 1}^H \chi(n + k) \right|^{2r} \right)^\frac{1}{2r}
+\end{align}
+where the second inequality is trivial because we have extended the incomplete sum to a complete sum. Note that this last expression can now be treated using Lemma 2, but it turns out that there is no choice of parameters $H$ and $r$ which gives a bound that is better than what one would get by applying either the trivial bound or P\'{o}lya-Vinogradov. Hence, in order to prove the Burgess bound we need to improve upon this method somehow.
+
+\subsection{Improving the method}
+The problem with the method above is that the inequality where we went from the incomplete sum to the complete sum is too inefficient. In the incomplete sum we were considering the $2r$th moment over only $N$ different translates of $\{1,2,\ldots, H\}$ whereas in the completed version we had the $2r$th moment over all $p$ different translates. In order to make this step more efficient, Burgess's key idea was to choose a larger family $\mathcal{F}$ consisting of all \emph{arithmetic progressions}
+\[
+\{n + d, n+2d, \ldots, n+H d\} \text{ for all $d \in \{1, \ldots, D\}$ and $n \in I$}
+\]
+where $D$ is another parameter which we think of as being small relative to $N$ (we will require $D < p$).
+
+Similarly to our previous method, this family is an approximate $DH$-fold covering of $I$. In order to state the approximate version of \eqref{eq:kfold} that we need, let
+\[
+\mathcal{M}(y)  \coloneqq \max_{\substack{M,N \\ N \leq y}} |S(M,N)|.
+\]
+It is not hard to show then that
+\begin{equation} \label{eq:kfold2}
+S(M,N) = \frac{1}{DH} \sum_{ \substack{n \in I \\ d \in \{1, \ldots, D\} \\ k \in \{1, \ldots, H\}}} \chi(n+kd) + 2 \theta \mathcal{M}(DH)
+\end{equation}
+where $|\theta| \leq 1$. (Note that the method in section 2.1 was the special case where $D=1$.)
+
+
+Since $\chi$ is multiplicative, each of the sums over the arithmetic progressions can easily be related to an incomplete character sum $S(m, H)$ for some $m$. Indeed, given some choice of $n$ and $d$, we may write $n \equiv d m \pmod{p}$ for some unique $1 \leq m \leq p$, and we see that
+\[
+\sum_{k = 1}^{H} \chi(n+k d) = \chi(d)  \sum_{k = 1}^{H} \chi(m+k).
+\]
+
+Letting $v(m)$ denote the number of pairs $n, d$ with $n \in I$ and $d \in \{1, \ldots, D\}$ such that $n \equiv d m \pmod{p}$, we see that
+\begin{align}
+\left| \sum_{n,d,k} \chi(n+kd) \right| &= \left| \sum_{m = 1}^p \sum_{\substack{n,d \\ n \equiv dm \; (p)}} \chi(d) \sum_{k = 1}^{H} \chi(m+k) \right| \\
+&\leq \sum_{m = 1}^p v(m) \left| \sum_{k = 1}^{H} \chi(m+k) \right|. \label{eq:vbd}
+\end{align}
+
+We now describe why this new parameter $D$ should allow us to get an improvement over the previous method. Suppose for a moment that for any $m$ there is at most one pair $(n, d)$ associated to it. This would mean that $v(m)=1$ for $ND$ different values of $m$, and $v(m)=0$ elsewhere. Consequently, the sum in \eqref{eq:vbd} is an incomplete sum just like the sums in \eqref{eq:naivebd} were, but the collection of residue classes we are summing over this time is less sparse (we are now summing over $ND$ residue classes as opposed to just $N$). Hence, the step where we bound the incomplete sum by a complete sum will be more efficient in this case.
+
+In reality of course there may be ``collisions'' where different pairs $(n, d)$ and $(n', d')$ correspond to the same value of $m$. Moreover, we also need to worry about how to handle the error term in \eqref{eq:kfold2}. To make sure there are not many collisions, it is reasonable to choose our parameter $D$ such that $ND \ll p$. If we also assume that (say) $DH \leq N/10$, then we can try handle the error term in \eqref{eq:kfold2} by induction on $N$ since then we would have $\mathcal{M}(DH) \leq \mathcal{M}(N/10)$ which can be bounded by the induction hypothesis (since the induction hypothesis would give a bound on all sums $S(M',N')$ whose length $N'$ is less than $N$).
+
+Applying \eqref{eq:vbd} and H\"{o}lder's inequality to bound \eqref{eq:kfold2} we see that
+\[
+|S(M,N)| \leq \frac{1}{DH} ||v||_{\frac{2r}{2r-1}} \left( \sum_{n=1}^{p} \left| \sum_{k = 1}^H \chi(n + k) \right|^{2r}\right)^\frac{1}{2r} + 2 \mathcal{M}(DH)
+\]
+where we have used the notation $||v||_s$ to mean $\left(\sum_{m=1}^p v(m)^s \right)^{\frac{1}{s}}$. Applying Lemma 2 then gives
+\begin{equation} \label{eq:sbd}
+|S(M,N)| \leq \frac{1}{D} ||v||_{\frac{2r}{2r-1}} C r \left(H^{-\frac{1}{2}} p^{\frac{1}{2r}} + p^\frac{1}{4r}\right) + 2 \mathcal{M}(DH)
+\end{equation}
+for some absolute constant $C > 0$.
+
+As discussed above, if we were to assume there were no ``collisions'' then it is easy to see that $||v||_{\frac{2r}{2r-1}} = (ND)^{1-\frac{1}{2r}}$. In this case one finds that the best choices of $D$ and $H$ subject to our constraints are
+\begin{equation} \label{eq:params}
+H = \left\lfloor p^{\frac{1}{2r}}\right\rfloor, \quad\quad D = \left\lfloor \frac{1}{10} N p^{-\frac{1}{2r}}\right\rfloor.
+\end{equation}
+Inserting all of these values into \eqref{eq:sbd} and doing the induction on $N$ as mentioned above would give the Burgess bound without out any logarithmic loss.
+
+In reality there will be some collisions, so our bound on $||v||_{\frac{2r}{2r-1}}$ will end up being slightly worse than the idealized scenario. To get such a bound, we can try to interpolate between bounds on $||v||_1$ and $||v||_2$. By the definition of $v(m)$, the $L^1$ bound is clearly
+\[
+||v||_1 = \sum_{m=1}^p v(m) = DN.
+\]
+We would hope now to be able to prove a bound on $||v||_2^2$ which is not much worse than this. The following lemma shows that it is possible to do with only a logarithmic loss.
+
+\begin{lemma}
+Suppose $DN < p/2$ and $1 \leq D \leq N$. Then $||v||_2^2 \ll DN \log p$.
+\end{lemma}
+\begin{proof}
+Note that by the definition of $v(m)$, the sum $\sum_{m=1}^p v(m)^2$ counts the number of choices of $n, n', d, d', m$ such that $n, n' \in \{1,\ldots, N\}$, and $d, d' \in \{1,\ldots, D\}$, and $M+n \equiv dm \pmod{p}$, $M+n' \equiv d'm \pmod{p}$. Eliminating $m$, these congruences are equivalent to the condition
+\[
+(d-d')M\equiv d'n-dn' \pmod{p}.
+\]
+
+Given any pair $d,d'$ we will now determine an upper bound on the number of choices of $n,n'$ satisfying this condition. Let $k$ be the unique integer such that $|k| <p/2$ and $(d-d')M \equiv k \pmod{p}$. Note that by the assumption $DN < p/2$, any solution to the congruence $d'n-dn' \equiv k \pmod{p}$ must in fact be an equality $d'n-dn' = k$. If $n_0, n_0'$ are a fixed pair of solutions, elementary number theory tells us that solutions to this equation are given by $n = n_0 + \frac{d}{(d,d')} h, n = n_0 + \frac{d'}{(d,d')} h$. By the restriction on the range of $n, n'$ the solutions we care about must satisfy $|h| \leq \frac{N (d,d')}{\max\{d,d'\}}$. This means the total number of choices of $n,n'$ is at most $1+\frac{2 N (d,d')}{\max\{d,d'\}}$.
+
+Summing now over all choices of $d,d'$ we get
+\begin{align*}
+\sum_{m=1}^p v(m)^2 &\ll \sum_{1 \leq d \leq d' \leq D} \left(1+\frac{2 N (d,d')}{d'}\right) \\
+&\ll D^2 + N \sum_{l \leq D} \sum_{1 \leq e \leq e' \leq D/l} \frac{1}{e'} \\
+&\ll D^2 + DN \log 2D.
+\end{align*}
+which gives the result.
+\end{proof}
+
+To see that our choice of $D$ in \eqref{eq:params} satisfies the constraints of the lemma, note that $DN \leq \frac{1}{10}N^2 p^{-\frac{1}{2r}}$. One may verify that this quantity is $<p/2$ for any values of $N$ and $p$ which we are interested in (i.e. values which are not already covered by the P\'{o}lya-Vinogradov inequality).
+
+Hence, applying H\'{o}lder's inequality, one may then verify that
+\[
+||v||_\frac{2r}{2r-1} \leq ||v||_1^{1-\frac{1}{r}} ||v||_2^{\frac{1}{r}} \ll (DN)^{1-\frac{1}{2r}} (\log p)^{\frac{1}{2r}}.
+\]
+Inserting this into \eqref{eq:sbd} with our choice of parameters \eqref{eq:params} we get
+\[
+|S(M,N)| \leq C' r N^{1-\frac{1}{r}} p^{\frac{r+1}{4r^2}} (\log p)^{\frac{1}{2r}}+ 2 \mathcal{M}(N/10).
+\]
+
+Performing the induction on $N$ (and using the trivial bound as soon as $N < p^{1/4+1/(4r)}$) gives the Burgess bound.
+
+ \bibliographystyle{amsplain}
+\bibliography{references}
+\end{document}

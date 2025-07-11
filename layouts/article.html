@@ -1,0 +1,12 @@
+<% if @item[:preamble] %>
+<p><strong>Note:</strong> <%= @item[:preamble] %>
+</p>
+<% end %>
+
+<article class="amsart">
+  <header>
+    <h1><%= @item[:title] %></h1>
+    <p><%= @item[:author].join(', ') %></p>
+  </header>
+  <%= yield %>
+</article>

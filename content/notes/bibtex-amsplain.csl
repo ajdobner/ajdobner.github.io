@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" initialize="false" demote-non-dropping-particle="sort-only" default-locale="en-US">
+  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
+  <info>
+    <title>BibTex amsplain</title>
+    <id>http://www.zotero.org/styles/bibtex-amsplain</id>
+    <link href="http://www.zotero.org/styles/bibtex-amsplain" rel="self">amsplain</link>
+    <link href="http://www.zotero.org/styles/etri-journal" rel="template"/>
+    <author>
+      <name>Alexander Dobner</name>
+    </author>
+    <category citation-format="numeric"/>
+    <category field="math"/>
+    <updated>2023-06-24T23:10:10+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <link href="https://www.bibtex.com/s/bibliography-style-misc-amsplain/" rel="documentations"/>
+    <link/>
+  </info>
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+  <macro name="issue">
+    <choose>
+      <if match="any" variable="issue">
+        <label suffix=" " variable="issue" form="short"/>
+        <text variable="issue"/>
+      </if>
+      <else>
+        <text variable="issue"/>
+      </else>
+    </choose>
+  </macro>
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="author"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter=",">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography entry-spacing="0" second-field-align="flush" et-al-min="7" et-al-use-first="6">
+    <sort>
+      <key variable="author"/>
+    </sort>
+    <layout suffix=".">
+      <text variable="citation-number" prefix="[" suffix="]"/>
+      <group delimiter=", ">
+        <names variable="author"/>
+        <text variable="title" font-style="italic"/>
+        <choose>
+          <if type="book" match="any">
+            <text macro="edition"/>
+            <text variable="publisher"/>
+            <text variable="publisher-place"/>
+            <date date-parts="year-month" form="text" variable="issued"/>
+          </if>
+          <else-if type="thesis">
+            <text variable="genre"/>
+            <text variable="publisher"/>
+            <date date-parts="year-month" form="text" variable="issued"/>
+          </else-if>
+          <else-if type="webpage post post-weblog" match="any">
+            <text variable="title" font-style="italic"/>
+            <text variable="URL"/>
+            <date date-parts="year-month" form="text" variable="issued"/>
+          </else-if>
+          <else-if type="article-journal article article-magazine" match="any">
+            <group delimiter=" ">
+              <text variable="container-title" form="short"/>
+              <text variable="volume" font-weight="bold"/>
+              <date date-parts="year" form="text" variable="issued" prefix="(" suffix=")"/>
+            </group>
+            <text macro="issue"/>
+            <text variable="page" form="short"/>
+          </else-if>
+          <else>
+            <text variable="container-title"/>
+            <text variable="publisher"/>
+            <date form="text" variable="issued"/>
+          </else>
+        </choose>
+      </group>
+    </layout>
+  </bibliography>
+</style>

@@ -1,0 +1,172 @@
+\documentclass[a4paper,11pt,twoside]{amsart}
+\usepackage{geometry}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{todonotes}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{url}
+
+\let\originalleft\left
+\let\originalright\right
+\let\vec\mathbf
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\originalleft}
+\renewcommand{\right}{\aftergroup\egroup\originalright}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\Log}{\operatorname{Log}}
+\newcommand{\Arg}{\operatorname{Arg}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+
+%\setlength{\oddsidemargin}{.5in}
+%\setlength{\evensidemargin}{.5in}
+%\setlength{\textwidth}{\paperwidth}
+%\addtolength{\textwidth}{-1in}
+\setlength\evensidemargin\oddsidemargin
+
+\begin{document}
+\title{Integration, measures, and the Riesz representation theorem}
+\author{Alex Dobner}
+\address{Department of Mathematics, University of Michigan \\
+530 Church St\\
+Ann Arbor, MI 48109}
+\email{adobner@umich.edu}
+\maketitle
+
+In this note I want to record some abstract features of integration (linear algebraic, topological, and order theoretic). Specifically I'll discuss the connections between these and the role of the Riesz representation theorem.
+
+\section{Intro}
+Before saying anything about the Riesz representation theorem, we recall some standard facts about the Riemann integral. Given a continuous function $f \colon [a,b] \to \R$ the Riemann integral $\int_a^b f(x)\, dx$ is a real number corresponding to the signed area underneath the graph of $f$. There is a natural procedure for finding this signed area: partition the interval $[a,b]$ into subintervals, for each subinterval draw a rectangle whose height is given by the height of the curve at some point in the interval (it doesn't matter which, and then add up the signed areas of the rectangles. One can show that by taking finer and finer partitions, the signed areas converge to a real number which we define to be the value of the integral.
+
+Now let's connsider some properties of this integral. The procedure we've described above works for all functions in the space $C([a,b];\R)$, i.e. the real valued continuous functions. This space is a vector space, but it also has some additional structure properties. Indeed,
+\begin{enumerate}
+    \item it's a Banach space under the uniform norm (so it has a nice topological structure),
+    \item it's a lattice (in the sense of order theory; so it has a nice order-theoretic structure),
+    \item it's a (unital, abelian) algebra under multiplication (in fact its complexification is a C*-algebra).
+\end{enumerate}
+
+The Riemann integral interacts quite nicely with the first two of these properties. Indeed, it's an order preserving (hence positive) linear functional $\int \colon C([a,b];\R) \to \R$ which is continuous with respect to the uniform norm. This is exactly the type of behavior we'd like when generalizing the notion of integration. We won't focus so much on the third property although there's more to say there with respect to integration too.\footnote{Example: in functional analysis, one considers projection valued measures, and in this case the integrals are C*-algebra homomorphisms.}
+
+
+
+There are various ways to generalize the Riemann integral to integrate objects/functions which are not in $C([a,b];\R)$.
+\begin{enumerate}
+    \item We could change the codomain of the functions to something more general. (The case of $\C$-valued functions is straightforward for example.) One could also consider functions whose values lie in a Banach space or a topological vector space
+    \item Increasing the dimension of the domain is also straightforward. The theory of Riemann integration works just as well for functions $f \colon [a,b]^d \to \R$.
+    \item Along the lines of the previous item, one might try to develop a ``coordinate-invariant'' theory of integration that works on $d$-dimensional manifolds. The correct object to integrate in this case is called a differential form. Setting this up depends on an important property of the Riemann integral, namely the change of variables formula.
+    \item We could take the abstract view that ``integral'' is something satisfying some or all of properties we discussed above, and then try to deduce further properties. For example:
+\begin{enumerate}
+    \item We could characterize an integral as a continuous (in some topology) linear functional on a topological vector space of functions.
+    \item Or we could loosen the topological considerations to integrate on spaces which don't even have a topology. In this case it's the order theoretic properties of integration become the most important.
+\end{enumerate}
+\end{enumerate}
+
+
+Let's now focus on this last item. This is the version of integration that measure theory is concerned with. The setup is as follows: let $X$ be a set, let $\mathcal{E}$ be a collection of subsets of $X$, and let $\mu \colon \mathcal{E} \to [0,+\infty)$ be a function indicating the sizes of the subsets.
+
+Given such a function $\mu$, it is clear how to integrate a ``rectangle'' function whose ``base'' is a set in $\mathcal{E}$ and whose height is a real number. If $\mathcal{E}$ is closed under finite unions and intersections and if $\mu$ is finitely additive, then there's a unique way to extend this notion of integration to finite linear combinations of rectangles.
+
+Going further, we also want it to be the case that our integral satisfies the monotone convergence theorem (i.e. the integral should preserve the limit of monotone sequences of functions). For this to hold it must be the case that $\mu$ is countably additive. Moreover, if the MCT is to hold then there is a unique way to define the integral of nonnegative measurable functions\footnote{Note if we do not insist that the integral satisfy the MCT then there are other ways it may still be linear and respect the ordering. For example if $X=\N$ with counting measure, then one could assign the value $+\infty$ as the integral of all nonnegative sequences which are not finitely supported.}: we let $\int f\, d\mu$ be the supremum of the integrals of nonnegative simple functions less than or equal to $f$. The integral can then of be extended in a unique way to all ``integrable'' functions (i.e. functions $f$ such that $\int |f|\, d\mu < \infty$).
+
+The important aspect of the discussion in the last few paragraphs is that there were no topological considerations (although the monotone convergence theorem tells us that integration is ``continuous'' in a certain order theoretic sense).
+
+Now suppose that the set $X$ in the setup above is a topological space. Then there are possibly lots of function spaces on $X$ which are topological vector spaces. One might naturally ask the following question: what are the continuous linear functionals on these spaces, and how do they relate to measures/integration as we've described above?
+
+\section{Riesz Representation Theorem(s)}
+
+Let $X$ be a locally compact Hausdorff space. We will consider the function space $C_c(X)$ consisting of continuous compactly supported complex-valued functions on $X$. The dual space $C_c(X)^*$ depends on what topology we place on $C_c(X)$. There are two versions of the Riesz respresentation theorem which will require considering two different topologies.\footnote{Note that $C_c(X)^*$ will always be some subspace of the \emph{algebraic} dual space, but the point is that we want the topological properties to play some role in integration.}
+
+\subsection{Uniform norm topology}
+In this section, suppose that we endow $C_c(X)$ with the uniform norm $||\cdot||_\infty$. This makes $C_c(X)$ into a normed vector space whose completion is the Banach space $C_0(X)$. Hence, under this topology we have $C_c(X)^* \cong C_0(X)^*$.
+
+Moreover we have
+\begin{theorem}[Riesz representation theorem (norm topology)]
+\[
+C_c(X)^* \cong C_0(X)^* \cong M(X)
+\]
+where $M(X)$ is the space of complex Radon measures. (See the appendix below for what we mean exactly by complex Radon measure. If the topology of $X$ is decent, then in fact this is just all complex Borel measures.) This is an isometric isomorphism of Banach spaces where $M(X)$ is endowed with the total variation norm.
+\end{theorem}
+
+Unfortunately, this version of the Riesz representation theorem does not cover all the useful cases. Most notably, consider the case where $X=\R$ and $T\colon C_c(X) \to \C$ is the linear functional given by Riemann integration. This functional is \emph{not} norm continuous\footnote{Consider a sequence of functions whose heights go to zero but whose bases spread out very fast.} so the theorem doesn't apply.
+
+There is a way around this issue. On any compact interval $K \subset \R$ the functional $T \colon C_c(K)=C(K) \to \C$ given by Riemann integration \emph{is} continuous and the Riesz representation theorem then furnishes the Lebesgue measure on $K$. We can then ``glue together'' the measures on compact intervals to get a measure on $\R.$ We'll see a more systematic version of this in the next section.
+
+\subsection{Direct limit topology}
+Another natural topology to place on $C_c(X)$ is defined as follows. For any compact set $K \subset X$ consider the subspace $C_c(X;K)$ of functions whose support is contained in $K$. Each of these is a Banach space sitting inside $C_c(X)$, and taking a direct limit gives a topology on $C_c(X)$. In other words, this topology is the final topology induced by the inclusions $C_c(X;K) \to C_c(X)$. This implies the following characterization of continuity for linear functionals.
+
+\begin{lemma}
+A linear functional $T \colon C_c(X) \to \C$ is continuous in the topology described above if and only if for every compact $K \subset X$ there exists a $M_K$ such that
+\[
+|T(f)| \leq M_K ||f||_\infty \text{ for all }f\in C_c(X;K).
+\]
+\end{lemma}
+
+\textbf{Note 1:} this topology is finer than the topology of uniform convergence on $C_c(X)$. Consequently, there are \emph{more} continuous linear functionals on $C_c(X)$ under this topology. Consequently, with this topology it's not always possible to ``reasonably'' extend a continuous functional to a functional on $C_0(X)$.
+
+\textbf{Note 2:} any \emph{positive} linear functional $T \colon C_c(X) \to \C$ is automatically continuous in this topology. This is because for any $K$ there is a nonnegative compactly supported function $g_K$ which is identically 1 on $K$, and hence for any nonnegative $f \in C_c(X;K)$ we have
+\[
+T(f) \leq T(||f||_\infty g_K) = T(g_K) ||f||_\infty.
+\]
+Now for a general function $f \in C_c(X;K)$ one can get a bound on $|T(f)|$ by breaking $f$ into real and imaginary parts and then into positive and negative parts.
+
+We can now formulate a version of the Riesz representation theorem for the dual space of $C_c(X)$ with the direct limit topology.
+
+\begin{theorem}[Riesz representation theorem (direct limit topology)]
+\[
+C_c(X)^* \cong M'(X)
+\]
+where $M'(X)$ denotes a more subtle space than the one discussed above. An element of $M'(X)$ as a ``measure'' whose real and imaginary parts are each the difference between positive Radon measures.\footnote{Why is this not the same as before? The issue is that the positive and negative parts are not assumed to be finite measures, so their difference may not actually be defined on every Borel set. For compact sets the measure is well defined though because of the Radon condition. This makes sense because we just need to be able to integrate all functions which are compactly supported, and it may not be possible to sensibly integrate against a wider class of functions.}  The positive linear functionals correspond to positive Radon measures.
+\end{theorem}
+
+%The most basic example of all of this rather general framework is the case where $X = \R^n$. If we consider the linear functional given by the Riemann integration, then the corresponding measure whose existence is given by either form of the Riesz representation theorem above is Lebesgue measure. (Actually, Lebesgue measure is the completion of this measure but this is not so important.)
+
+% \section{Integration on Manifolds}
+% An important property of Riemann integration (and Lebesgue integration) is the change of variables formula. If $\phi \colon [0,1]^k \to \phi([0,1]^k) \subset \R^k$ is a diffeomorphism than this says that
+% \[
+% \int_{[0,1]^k} f(\phi(\vec x)) |\det J_\phi(\vec x)| \, d\vec x = \int_{\phi([0,1]^k)} f(\vec u)\, d\vec u.
+% \]
+
+% Now suppose one is working on a smooth manifold and wants to develop a satisfactory theory of integration. We want our theory to be consistent with the model scenario of computing the integral $\int_{[0,1]^k} f(\vec x)\, d\vec x$ of a continuous function $f \colon [0,1]^k \to \R$. Let us take the same perspective as in the previous section where we viewed integration somewhat abstractly as a functional.
+
+% In this case,
+
+\section{Appendix: Regularity and Radon measures}
+Let $X$ be a locally compact Hausdorff space.
+\begin{definition}
+A positive Borel measure $\mu$ on $X$ is called a (positive) \emph{Radon measure} if it satisfies the following regularity properties:
+\begin{enumerate}[(i)]
+    \item it is finite on all compact sets,
+    \item it is outer regular on all Borel sets (i.e. if $E$ is Borel then $\mu(E) = \inf\{\mu(U) \colon U \supset E, U\text{ open}\}$,
+    \item it is inner regular on all open sets (i.e. if $E$ is open, then $\mu(E)= \sup\{\mu(K)\colon K \subset E, K\text{ compact}\}.$
+\end{enumerate}
+\end{definition}
+
+Extending the above definition, a \emph{signed Radon measure} is a signed Borel measure whose positive and negative variation are Radon. Similarly a \emph{complex Radon measure} is a complex Borel measure whose real and imaginary parts are signed Radon measures. We denote the space of all complex Radon measures by $M(X).$
+
+We also say a measure is \emph{regular} if it is outer regular and inner regular on all Borel sets.  If the topological space $X$ that one is working with is slightly nicer than just LCH, then it turns out that some of these properties come for free. For example, we have the following theorem.
+
+\begin{theorem}
+Let $X$ be an LCH space in which every open set is $\sigma$-compact (e.g. this is the case if $X$ is second countable). Then every Borel measure on $X$ that is finite on compact sets is regular and hence Radon.
+\end{theorem}
+
+\begin{corollary}
+Let $X$ be an LCH space in which every open set is $\sigma$-compact. Then every complex Borel measure is Radon.
+\end{corollary}
+
+\end{document}
