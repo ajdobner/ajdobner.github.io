@@ -5,7 +5,6 @@ text_extensions: [ 'adoc', 'asciidoc', 'atom', 'coffee', 'css', 'csl', 'erb', 'h
 
 prune:
   auto_prune: true
-  exclude: [ '.git' ]
 
 data_sources:
   - type: filesystem
@@ -13,7 +12,4 @@ data_sources:
     extra_files:
       - "/**/.htaccess"
 
-deploy:
-  staging:
-    kind: rsync
-    dst: "adobner@sftp.itd.umich.edu:~/staging"
+
