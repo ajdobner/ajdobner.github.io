@@ -8,3 +8,7 @@ gem 'nokogiri'
 # for viewing
 gem 'adsf'
 gem 'webrick'
+
+group 'nanoc' do
+  gem 'nanoc-live'
+end

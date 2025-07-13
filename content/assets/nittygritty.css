@@ -1,18 +1,45 @@
 /* This is css for laying out a few site-specific things */
 #topbar {
   margin-bottom: 1.2em;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
 }
 
-#topbar nav {
+#topbar .site-header {
   font-size: 1.2rem;
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   border-bottom: 1px solid black;
 }
 
-#topbar nav a {
+#topbar h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding-left: 1rem;
+}
+
+#topbar h1 a {
+  color: var(--body-color);
+  text-decoration: none;
+}
+
+#topbar h1 a:hover {
+  text-decoration: underline;
+}
+
+#topbar .contact-info {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+#email-link {
+  font-size: .9rem !important;
+  font-weight: 400;
+  color: #666;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  cursor: default;
 }
 
 #homebanner {
@@ -20,18 +47,86 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  column-gap: 1rem;
-  row-gap: 1rem;
-  margin-top: 1.2rem;
-  margin-bottom: 1.2rem;
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#imagearea {
+  flex-basis: calc(33.33% - 0.75rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  order: 2;
+  padding: 0.5rem;
 }
 
 #imagearea img {
-  height: 11em;
+  height: 12em;
+  width: 12em;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border: 3px solid #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#infoarea, #imagearea {
-  margin: 0 auto;
-  width: fit-content;
+#imagearea img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+#infoarea {
+  flex-basis: calc(66.67% - 0.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  order: 1;
+  padding: 0;
+}
+
+#infoarea p {
+  line-height: 1.6;
+  margin-bottom: 0;
+  font-size: 1.05rem;
+}
+
+#infoarea p:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile/tablet responsive design */
+@media (max-width: 500px) {
+  #homebanner {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    row-gap: 1.5rem;
+  }
+  
+  #imagearea {
+    flex-basis: auto;
+    order: 1;
+    padding: 0.5rem;
+  }
+  
+  #imagearea img {
+    height: 10em;
+    width: 10em;
+  }
+  
+  #infoarea {
+    flex-basis: auto;
+    order: 2;
+    max-width: 100%;
+    text-align: left;
+    align-self: flex-start;
+    padding: 0.5rem 0;
+  }
 }
 
