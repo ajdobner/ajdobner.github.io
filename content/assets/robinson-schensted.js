@@ -100,20 +100,13 @@ class RobinsonSchenstedApp {
       // Show insertion step info
       this.currentStepDisplay.textContent = `Inserting ${value} (position ${position})...`;
       
-      // Calculate insertion path
-      const insertionPath = this.calculateInsertionPath(value);
+      // Perform step-by-step bumping animation
+      await this.animateStepByStepInsertion(animatedBox, value);
       
-      // Animate the box moving to tableau
-      await this.animateBoxToTableau(animatedBox, insertionPath);
-      
-      // Perform actual insertion
+      // Perform actual insertion (this updates the internal data structures)
       this.performInsertion(value, position);
       
-      // Update tableau displays
-      this.updateTableauxDisplay();
-      
-      // Clean up animated box
-      document.body.removeChild(animatedBox);
+      // Note: animatedBox is cleaned up in animateStepByStepInsertion
       
     } finally {
       this.isAnimating = false;
@@ -146,6 +139,159 @@ class RobinsonSchenstedApp {
     return animatedBox;
   }
   
+  async animateStepByStepInsertion(animatedBox, value) {
+    let currentValue = value;
+    let rowIndex = 0;
+    let currentBox = animatedBox;
+    
+    while (true) {
+      // If we need a new row, animate to it and place the value
+      if (rowIndex >= this.pTableau.length) {
+        await this.animateToNewRow(currentBox, rowIndex, currentValue);
+        this.pTableau.push([currentValue]);
+        this.updateTableauxDisplay();
+        break;
+      }
+      
+      const row = this.pTableau[rowIndex];
+      
+      // Animate to the left side of the current row
+      await this.animateToRowStart(currentBox, rowIndex);
+      
+      // Find insertion position and animate left-to-right
+      let insertIndex = -1;
+      for (let j = 0; j < row.length; j++) {
+        if (currentValue < row[j]) {
+          insertIndex = j;
+          break;
+        }
+      }
+      
+      if (insertIndex === -1) {
+        // Add to end of row
+        await this.animateLeftToRight(currentBox, rowIndex, row.length);
+        row.push(currentValue);
+        this.updateTableauxDisplay();
+        break;
+      } else {
+        // Bump existing element
+        await this.animateLeftToRight(currentBox, rowIndex, insertIndex);
+        
+        // Highlight the element that will be bumped
+        await this.highlightBumpedElement(rowIndex, insertIndex);
+        
+        // Replace the element
+        const bumpedValue = row[insertIndex];
+        row[insertIndex] = currentValue;
+        this.updateTableauxDisplay();
+        
+        // Remove current box
+        if (currentBox && currentBox.parentNode) {
+          document.body.removeChild(currentBox);
+        }
+        
+        // Continue with bumped value on next row
+        currentValue = bumpedValue;
+        rowIndex++;
+        
+        // Create new animated box for the bumped value
+        if (rowIndex < 10) { // Prevent infinite loops
+          currentBox = this.createBumpedBox(bumpedValue, rowIndex - 1, insertIndex);
+          document.body.appendChild(currentBox);
+        } else {
+          break;
+        }
+      }
+    }
+    
+    // Clean up final box if it still exists
+    if (currentBox && currentBox.parentNode) {
+      document.body.removeChild(currentBox);
+    }
+  }
+  
+  async animateToRowStart(animatedBox, rowIndex) {
+    const pTableauRect = this.pTableauSvg.getBoundingClientRect();
+    const targetX = pTableauRect.left + this.tableauOffsetX - 60; // Start to the left of the tableau
+    const targetY = pTableauRect.top + this.tableauOffsetY + rowIndex * (this.cellSize + this.cellPadding);
+    
+    animatedBox.style.transform = `translate(${targetX - parseInt(animatedBox.style.left)}px, ${targetY - parseInt(animatedBox.style.top)}px)`;
+    await this.sleep(400);
+  }
+  
+  async animateLeftToRight(animatedBox, rowIndex, colIndex) {
+    const pTableauRect = this.pTableauSvg.getBoundingClientRect();
+    const targetX = pTableauRect.left + this.tableauOffsetX + colIndex * (this.cellSize + this.cellPadding);
+    const targetY = pTableauRect.top + this.tableauOffsetY + rowIndex * (this.cellSize + this.cellPadding);
+    
+    animatedBox.style.transform = `translate(${targetX - parseInt(animatedBox.style.left)}px, ${targetY - parseInt(animatedBox.style.top)}px)`;
+    await this.sleep(500);
+  }
+  
+  async animateToNewRow(animatedBox, rowIndex, value) {
+    const pTableauRect = this.pTableauSvg.getBoundingClientRect();
+    const targetX = pTableauRect.left + this.tableauOffsetX;
+    const targetY = pTableauRect.top + this.tableauOffsetY + rowIndex * (this.cellSize + this.cellPadding);
+    
+    animatedBox.style.transform = `translate(${targetX - parseInt(animatedBox.style.left)}px, ${targetY - parseInt(animatedBox.style.top)}px)`;
+    await this.sleep(500);
+  }
+  
+  async highlightBumpedElement(row, col) {
+    // Find the SVG cell at this position and highlight it red
+    const cells = this.pTableauSvg.querySelectorAll('rect');
+    const cellIndex = this.getCellIndex(row, col);
+    
+    if (cellIndex >= 0 && cellIndex < cells.length) {
+      const cell = cells[cellIndex + 1]; // +1 because first rect is background
+      if (cell) {
+        const originalFill = cell.getAttribute('fill');
+        cell.setAttribute('fill', '#ff5722'); // Red color
+        await this.sleep(300);
+        cell.setAttribute('fill', originalFill);
+      }
+    }
+  }
+  
+  getCellIndex(row, col) {
+    let index = 0;
+    for (let r = 0; r < row; r++) {
+      if (this.pTableau[r]) {
+        index += this.pTableau[r].length;
+      }
+    }
+    return index + col;
+  }
+  
+  createBumpedBox(value, fromRow, fromCol) {
+    const pTableauRect = this.pTableauSvg.getBoundingClientRect();
+    const startX = pTableauRect.left + this.tableauOffsetX + fromCol * (this.cellSize + this.cellPadding);
+    const startY = pTableauRect.top + this.tableauOffsetY + fromRow * (this.cellSize + this.cellPadding);
+    
+    const animatedBox = document.createElement('div');
+    animatedBox.className = 'animated-box';
+    animatedBox.textContent = value;
+    animatedBox.style.cssText = `
+      position: fixed;
+      top: ${startY}px;
+      left: ${startX}px;
+      width: ${this.cellSize}px;
+      height: ${this.cellSize}px;
+      background-color: #ff5722;
+      color: white;
+      border: 2px solid #333;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      z-index: 1000;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+    return animatedBox;
+  }
+
   async animateBoxToTableau(animatedBox, insertionPath) {
     const pTableauRect = this.pTableauSvg.getBoundingClientRect();
     const finalRow = insertionPath[insertionPath.length - 1][0];
@@ -203,12 +349,53 @@ class RobinsonSchenstedApp {
   }
   
   performInsertion(value, position) {
-    // Perform actual insertion into P tableau
-    const insertionPath = this.insertIntoTableau(value);
-    
-    // Record in Q tableau
+    // Calculate the final position for Q tableau
+    // We need to calculate this based on the current state before any changes
+    const tempTableau = this.deepCopy(this.pTableau);
+    const insertionPath = this.calculateInsertionPathOnTableau(tempTableau, value);
     const [row, col] = insertionPath[insertionPath.length - 1];
     this.insertIntoQTableau(row, col, position);
+    
+    // Final tableau display update
+    this.updateTableauxDisplay();
+  }
+  
+  calculateInsertionPathOnTableau(tableau, value) {
+    const path = [];
+    let currentValue = value;
+    let rowIndex = 0;
+    
+    while (true) {
+      if (rowIndex >= tableau.length) {
+        tableau.push([currentValue]);
+        path.push([rowIndex, 0]);
+        break;
+      }
+      
+      const row = tableau[rowIndex];
+      let insertIndex = -1;
+      
+      for (let j = 0; j < row.length; j++) {
+        if (currentValue < row[j]) {
+          insertIndex = j;
+          break;
+        }
+      }
+      
+      if (insertIndex === -1) {
+        row.push(currentValue);
+        path.push([rowIndex, row.length - 1]);
+        break;
+      } else {
+        const bumpedValue = row[insertIndex];
+        row[insertIndex] = currentValue;
+        path.push([rowIndex, insertIndex]);
+        currentValue = bumpedValue;
+        rowIndex++;
+      }
+    }
+    
+    return path;
   }
   
   insertIntoTableau(value) {
