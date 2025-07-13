@@ -41,7 +41,7 @@ Enter a permutation below to see the Robinson-Schensted algorithm in action:
 </div>
 
 <link rel="stylesheet" href="/assets/robinson-schensted.css">
-<script src="/assets/robinson-schensted.js"></script>
+<script src="/assets/robinson-schensted.js" defer></script>
 
 ## Algorithm Description
 
