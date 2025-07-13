@@ -11,30 +11,51 @@ The Robinson-Schensted bijection is a fundamental correspondence in combinatoric
 Enter a permutation below to see the Robinson-Schensted algorithm in action:
 
 <div id="robinson-schensted-app">
-  <div class="input-section">
-    <label for="permutation-input">Enter permutation (space-separated numbers):</label>
-    <input type="text" id="permutation-input" placeholder="3 1 4 2" value="3 1 4 2">
-    <button id="run-algorithm">Run Algorithm</button>
-    <button id="step-through">Step Through</button>
-    <button id="reset">Reset</button>
+  <div class="control-section">
+    <div class="size-selector">
+      <label for="permutation-size">Select permutation size:</label>
+      <select id="permutation-size">
+        <option value="3">3</option>
+        <option value="4" selected>4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+    </div>
+    
+    <div class="control-buttons">
+      <button id="reset">Reset</button>
+    </div>
   </div>
   
   <div id="error-message" class="error hidden"></div>
   
+  <div class="permutation-input-section">
+    <h3>Click the numbers in sequence to build your permutation:</h3>
+    <div id="permutation-status">
+      <span>Current permutation: </span>
+      <span id="current-permutation">[]</span>
+    </div>
+    <div id="number-boxes" class="number-boxes"></div>
+  </div>
+  
   <div class="algorithm-display">
     <div class="step-info">
-      <p id="current-step"></p>
+      <p id="current-step">Select numbers above to see the Robinson-Schensted algorithm in action</p>
     </div>
     
     <div class="tableaux-container">
       <div class="tableau-section">
         <h3>P-tableau (Insertion)</h3>
-        <div id="p-tableau" class="tableau"></div>
+        <svg id="p-tableau" class="tableau-svg" viewBox="0 0 400 300"></svg>
       </div>
       
       <div class="tableau-section">
         <h3>Q-tableau (Recording)</h3>
-        <div id="q-tableau" class="tableau"></div>
+        <svg id="q-tableau" class="tableau-svg" viewBox="0 0 400 300"></svg>
       </div>
     </div>
   </div>
