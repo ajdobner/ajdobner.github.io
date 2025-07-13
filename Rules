@@ -1,21 +1,28 @@
 #!/usr/bin/env ruby
 
+#!/usr/bin/env ruby
+
+ignore '/notes/**/*'
+
+# Compile partial markdown files (used only as embedded content)
 compile '/**/*.md' do
   filter :erb if @item[:is_dynamic]
   filter :kramdown
-  layout '/default.*'
-  filter :relativize_paths, type: :html5
-  if item.identifier =~ '**/index.*'
-    write item.identifier.without_ext + '.html'
-  else
-    write item.identifier.without_ext + '/index.html'
+  
+  # Only write output files for non-partials
+  unless @item[:is_partial]
+    layout '/default.*'
+    filter :relativize_paths, type: :html5
+    if item.identifier =~ '**/index.*'
+      write item.identifier.without_ext + '.html'
+    else
+      write item.identifier.without_ext + '/index.html'
+    end
   end
 end
 
 
 passthrough '/assets/**/*'
 passthrough '/**/.htaccess'
-
-ignore '/notes/**/*'
 
 layout '/**/*', :erb

@@ -1,5 +1,6 @@
 ---
 title: "Bio"
+is_partial: true
 ---
 
 I am a mathematician specializing in [analytic number theory](https://en.wikipedia.org/wiki/Analytic_number_theory). More generally, I'm interested in all kinds of analysis, probability, and number theory.
