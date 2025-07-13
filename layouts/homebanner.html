@@ -1,17 +1,8 @@
 <header id="homebanner">
   <div id="imagearea">
-    <img id="headshot" src="/assets/me_downsized.jpeg" />
+    <img id="headshot" src="/assets/headshot.jpeg" />
   </div>
   <div id="infoarea">
-      <div>
-        <a href="http://www.lsa.umich.edu/math"
-          >Department of Mathematics</a
-        >
-      </div>
-      <div><a href="http://www.umich.edu">University of Michigan</a></div>
-      <div>530 Church Steet</div>
-      <div>Ann Arbor, MI 48109</div>
-      <div><b>Office:</b> East Hall 4823</div>
-      <div><b>E-Mail:</b> adobner [at] umich.edu</div>
+    <%= @items['/bio.*'].compiled_content %>
   </div>
 </header>
