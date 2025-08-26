@@ -1,5 +1,0 @@
-<% if item[:md] %>
-<%= items[item[:md]].compiled_content %>
-<% end %>
-<p><strong>pdf version: </strong><a href="<%= items[item[:tex]].path(rep: :pdf) %>">here</a></p>
-<%= items[item[:tex]].compiled_content(snapshot: :last) %>

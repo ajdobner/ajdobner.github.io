@@ -10,3 +10,4 @@ content/notes/*/*.fdb_latexmk
 content/notes/*/*.fls
 content/notes/*/*.log
 content/notes/*/*.run.xml
+content/notes/unfinished/*

@@ -1,8 +1,24 @@
 #!/usr/bin/env ruby
 
-#!/usr/bin/env ruby
+ignore '/notes/unfinished/**/*'
 
-ignore '/notes/**/*'
+compile '/notes/index.md' do
+  filter :erb
+  filter :kramdown
+
+  layout '/default.html'
+
+  write '/notes/index.html'
+end
+
+compile '/notes/**/*.md' do
+  filter :pandoc, args: [ :katex ]
+
+  layout '/article.html'
+  layout '/default.html'
+
+  write item.identifier.without_ext + '.html'
+end
 
 # Compile partial markdown files (used only as embedded content)
 compile '/**/*.md' do
@@ -21,8 +37,7 @@ compile '/**/*.md' do
   end
 end
 
-
 passthrough '/assets/**/*'
-passthrough '/**/.htaccess'
+passthrough '/notes/*.pdf'
 
 layout '/**/*', :erb

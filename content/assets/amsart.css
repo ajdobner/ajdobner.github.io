@@ -3,15 +3,17 @@
 }
 
 article.amsart {
-  line-height: 1.15;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* By default paragraphs are indented */
 .amsart p {
   text-indent: var(--amsart-indent-size);
-  margin: 0;
+  margin-bottom: 1rem;
 }
 
 article.amsart > * + * {
@@ -23,20 +25,11 @@ article.amsart > * + * {
 
 /* h1 is used for the title */
 article.amsart h1 {
-  font-size: 1rem;
+  font-size: 1.3rem;
   text-align: center;
-  text-transform: uppercase;
+  font-variant: small-caps;
   margin: 1.2rem;
-  line-height: 1;
-}
-
-/* author names */
-article.amsart h1+p {
-  text-indent: 0;
-  font-size: 0.8rem;
-  text-align: center;
-  text-transform: uppercase;
-  margin-bottom: 2em;
+  line-height: 1.3;
 }
 
 /* h2 is equivalent to section */

@@ -130,89 +130,7 @@ article {
   counter-reset: theorem definition sidenote-counter;
 }
 
-/* Justify and hyphenate all paragraphs */
-article p {
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  margin-top: 1rem;
-}
 
-
-/* Natural flow and rhythm in articles by default */
-article > * + * {
-  margin-top: 1em;
-}
-
-/* Heading typography */
-article h1 {
-  font-size: 2.5rem;
-  line-height: 3.25rem;
-  margin-bottom: 1.625rem;
-  font-weight: bold;
-}
-
-article h2 {
-  font-size: 1.7rem;
-  line-height: 2rem;
-  margin-top: 3rem;
-  font-weight: bold;
-}
-
-article h3 {
-  font-size: 1.4rem;
-  margin-top: 2.5rem;
-  font-weight: bold;
-}
-
-article h4 {
-  font-size: 1.2rem;
-  margin-top: 2rem;
-  font-weight: bold;
-}
-
-article h5 {
-  font-size: 1rem;
-  margin-top: 1.8rem;
-  font-weight: bold;
-}
-
-article h6 {
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: normal;
-  margin-top: 2.5rem;
-}
-
-article h3,
-article h4,
-article h5,
-article h6 {
-  line-height: 1.625rem;
-}
-
-article h1 + h2 {
-  margin-top: 1.625rem;
-}
-
-article h2 + h3,
-article h3 + h4,
-article h4 + h5 {
-  margin-top: 0.8rem;
-}
-
-article h5 + h6 {
-  margin-top: -0.8rem;
-}
-
-article h2,
-article h3,
-article h4,
-article h5,
-article h6 {
-  margin-bottom: 0.8rem;
-}
 
 /* For subsequent CSS I haven't decided whether */
 /* it should be article specific or not */
@@ -333,7 +251,7 @@ dl dd {
 
 /* Theorems, lemmas, proofs, definitions */
 /* I have these handled differently as the output comes from pandoc. */
-/* .theorem {
+.theorem {
   counter-increment: theorem;
   display: block;
   margin: 12px 0;
@@ -343,6 +261,10 @@ dl dd {
   content: 'Theorem ' counter(theorem) '. ';
   font-weight: bold;
   font-style: normal;
+}
+
+.theorem > p {
+  display: inline;
 }
 
 .lemma {
@@ -385,7 +307,7 @@ dl dd {
   content: 'Definition ' counter(definition) '. ';
   font-weight: bold;
   font-style: normal;
-} */
+} 
 /* No indent for first paragraph of theorems, lemmas, proofs */
 article .theorem > p, article .lemma > p, article .corollary > p, article .proof > p {
   text-indent: 0;

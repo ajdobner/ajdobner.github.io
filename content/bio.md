@@ -7,4 +7,4 @@ I am a mathematician specializing in [analytic number theory](https://en.wikiped
 
 From 2021 to 2025 I was a postdoc at the University of Michigan mentored by [Jeff Lagarias](https://dept.math.lsa.umich.edu/~lagarias/). Before that I got my PhD at UCLA where my advisor was [Terry Tao](https://www.math.ucla.edu/~tao/). I received my undergraduate degree in mathematics and computer science from Yale. 
 
-I recently moved to the Boston area, and I am on the job market. I am open to opportunities in industry or academia.
+I recently moved to the Boston area, and I am on the job market.

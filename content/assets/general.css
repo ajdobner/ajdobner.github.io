@@ -107,9 +107,13 @@ main {
 
 h1, h2, h3, h4, h5, h6 { margin: 1rem 0.5rem 0 0.5rem; }
 
-p, ul, ol, dl, table, blockquote, pre { margin: 0.5em 0 0; }
+p { margin: 0.5em 0 0; }
 
-ul ul, ol ol, ul ol, ol ul { margin-top: 0; }
+ul, ol, dl, table, blockquote, pre { 
+  margin: 0.5em 0 1.5em; 
+}
+
+ul ul, ol ol, ul ol, ol ul { margin-top: 0; margin-bottom: 0; }
 
 /* With p margin, like a skipped line */
 hr { margin: 1.5em 0 0; }
