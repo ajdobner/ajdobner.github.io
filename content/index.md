@@ -4,7 +4,7 @@ is_dynamic: true
 ---
 
 ## Writing
-* *Properties of the Alternative Circular Unitary Ensemble* (in preparation) ([slides](/assets/ACUEtalk.pdf))
+* *Properties of the Alternative Circular Unitary Ensemble* (in preparation, see [slides](/assets/ACUEtalk.pdf))
 * *Extreme values of the argument of the Riemann zeta function*, Mathematika 70 (2024) ([arXiv](https://arxiv.org/abs/2101.01747))
 * *A proof of Newman's Conjecture for the extended Selberg class*, Acta Arithmetica 201 (2021) ([arXiv](https://arxiv.org/abs/2005.05142))
   * The results of this paper are featured in Chapter 5 of [*Equivalents of the Riemann Hypothesis, Volume 3*](https://www.cambridge.org/us/universitypress/subjects/mathematics/number-theory/equivalents-riemann-hypothesis-volume-3#contents) by Kevin Broughan. The [cover image](https://kevinbroughan.nz/ERH/ERH3covers.pdf) is also related to the proof.
@@ -12,6 +12,8 @@ is_dynamic: true
 
 Here are some notes I've written on various topics. I plan to post more in the future.
 
+* [Classification of Wilf equivalences for length 8 singleton patterns](/notes/Classification_of_Wilf_equivalences_for_length_8_singleton_patterns.pdf). 
+  * Data: [n_leq_12](/notes/data/n_leq_12.txt), [n_leq_13](/notes/data/n_leq_13.txt), [n_leq_14](/notes/data/n_leq_14.txt)
 * [Keeping track of left and right actions](/notes/Left_and_right_actions.pdf)
 * [Poisson summation vis-á-vis Euler-Maclaurin summation](/notes/Poisson_Euler_Maclaurin.pdf)
 * [The Burgess bound](/notes/Burgess_bound.pdf)

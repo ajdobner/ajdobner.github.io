@@ -39,5 +39,6 @@ end
 
 passthrough '/assets/**/*'
 passthrough '/notes/*.pdf'
+passthrough '/notes/data/*'
 
 layout '/**/*', :erb
