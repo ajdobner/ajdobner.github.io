@@ -13,8 +13,7 @@ is_dynamic: true
 
 Here are some notes I've written on various topics. I plan to post more in the future.
 
-* [Classification of Wilf equivalences for length 8 singleton patterns](/notes/Classification_of_Wilf_equivalences_for_length_8_singleton_patterns.pdf). 
-  * Data: [n_leq_12](/notes/data/n_leq_12.txt), [n_leq_13](/notes/data/n_leq_13.txt), [n_leq_14](/notes/data/n_leq_14.txt)
+* [Wilf-equivalence](/notes/Wilf-equivalence.pdf).
 * [Keeping track of left and right actions](/notes/Left_and_right_actions.pdf)
 * [Poisson summation vis-á-vis Euler-Maclaurin summation](/notes/Poisson_Euler_Maclaurin.pdf)
 * [The Burgess bound](/notes/Burgess_bound.pdf)
