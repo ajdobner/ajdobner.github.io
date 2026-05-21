@@ -5,6 +5,7 @@ is_dynamic: true
 
 ## Writing
 * *Properties of the Alternative Circular Unitary Ensemble* (in preparation, see [slides](/assets/ACUEtalk.pdf))
+* *A concise proof of cylindric Schur positivity*, preprint (2026) ([arXiv](https://arxiv.org/abs/2605.20540))
 * *An RSK correspondence for cylindric tableaux*, preprint (2026) ([arXiv](https://arxiv.org/abs/2603.09119))
 * *Extreme values of the argument of the Riemann zeta function*, Mathematika 70 (2024) ([arXiv](https://arxiv.org/abs/2101.01747))
 * *A proof of Newman's Conjecture for the extended Selberg class*, Acta Arithmetica 201 (2021) ([arXiv](https://arxiv.org/abs/2005.05142))
