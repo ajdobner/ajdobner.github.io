@@ -14,6 +14,7 @@ is_dynamic: true
 
 Here are some notes I've written on various topics. I plan to post more in the future.
 
+* [Generalized monoid algebras](/notes/generalized_monoid_algebras.pdf)
 * [Wilf-equivalence](/notes/Wilf-equivalence.pdf)
 * [Keeping track of left and right actions](/notes/Left_and_right_actions.pdf)
 * [Poisson summation vis-á-vis Euler-Maclaurin summation](/notes/Poisson_Euler_Maclaurin.pdf)
